@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ data.assignment.name }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="Description" value="{{ data.assignment.desc }}">
+  </mat-form-field>
+  <br>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker1" placeholder="Create date" [value]=convertDate(data.assignment.created_date)>
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker2" placeholder="Due date" [value]=convertDate(data.assignment.due_date)>
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>State</mat-label>
+    <select matNativeControl>
+      <option value="selected">{{ data.assignment.state }}</option>
+    </select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-stroked-button (click)="onNoClick()">Close</button>
+  <button mat-button mat-raised-button color="primary" [mat-dialog-close]>Save</button>
+</mat-dialog-actions>

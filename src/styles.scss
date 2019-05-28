@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+.icon {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.center {
+  text-align: center;
+  width: 100%;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+mat-panel-title {
+  font-weight: bolder;
+}

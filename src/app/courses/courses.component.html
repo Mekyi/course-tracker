@@ -1,3 +1,20 @@
-<ul *ngFor="let course of courses">
-  <li (click)="onSelect(course.course_id)">{{ course.name }}</li>
-</ul>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Home" routerLink="/">home</mat-icon>
+    <span class="center">Course Tracker</span>
+    <span class="spacer"></span>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Add course">add</mat-icon>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="course-container" *ngFor="let course of courses">
+  <mat-card class="course-item">
+    <mat-card-header>
+      <mat-card-title>{{ course.name }}</mat-card-title>
+      <mat-card-subtitle>{{ course.start_date }} - {{ course.end_date }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button class="select-button" mat-flat-button color="primary" (click)="onSelect(course.course_id)">Select</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

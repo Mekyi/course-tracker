@@ -18,7 +18,7 @@
         <mat-icon class="modify" (click)="openModifyDialog(i)">settings</mat-icon>
       </mat-card-title>
       <mat-card-subtitle>
-        {{ course.start_date }} - {{ course.end_date }}
+        {{ formatDate(course.start_date) }} - {{ formatDate(course.end_date) }}
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>

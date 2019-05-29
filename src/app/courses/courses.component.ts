@@ -29,6 +29,13 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(['/course/' + id]);
   }
 
+  // Format date to user friendly format
+  formatDate(date) {
+    let fDate: any = new Date(date);
+    fDate = `${fDate.getDate()}.${fDate.getMonth() + 1}.${fDate.getFullYear()}`;
+    return fDate;
+  }
+
   // Create new course
   createCourse(data) {
     const newCourse: CourseItem = {

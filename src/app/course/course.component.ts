@@ -3,8 +3,9 @@ import { DataService } from '../services/data.service';
 import { CourseItem, AssignmentItem } from '../templates/template';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ModifyAssignmentModalComponent } from './modify-assignment-modal/modify-assignment-modal.component';
+import { AddAssignmentModalComponent } from './add-assignment-modal/add-assignment-modal.component';
 
 @Component({
   selector: 'app-course',
@@ -12,15 +13,18 @@ import { ModifyAssignmentModalComponent } from './modify-assignment-modal/modify
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
+  date = new Date();
   courseId: number;
   courseItem: CourseItem;
   assignments: AssignmentItem[];
 
-  constructor(protected dataService: DataService, public dialog: MatDialog, protected route: ActivatedRoute) {
+  constructor(protected dataService: DataService, public dialog: MatDialog,
+          protected route: ActivatedRoute) {
     this.courseId = Number(route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit() {
+    // Get course and assignment items via data service
     this.courseItem = this.dataService.getCourse(this.courseId);
     this.assignments = this.dataService.getCourseAssignment(this.courseId);
   }
@@ -30,19 +34,56 @@ export class CourseComponent implements OnInit {
     return(new FormControl(new Date(date)).value);
   }
 
-  // Open modal for quotation request overview
+  createAssignment(data) {
+    // Create assignment from template
+    const newAssignment: AssignmentItem = {
+      // Fill assignment properties
+      assignment_id: this.dataService.genAssignmentId(this.courseId),
+      name: data.name,
+      desc: data.desc,
+      state: data.state,
+      // Convert date format to ISO string and remove time
+      created_date: new Date(this.date).toISOString().split('T')[0],
+      due_date: new Date(data.due_date).toISOString().split('T')[0],
+      course_id_FK: this.courseId
+    };
+
+    // Send assignment to data service
+    this.dataService.addAssignment(newAssignment);
+    console.log(newAssignment);
+
+    // Get assignments from data service
+    this.assignments = this.dataService.getCourseAssignment(this.courseId);
+  }
+
+  // Open modal for modifying assignment
   openModifyDialog(index): void {
     console.log(index);
     const dialogRef = this.dialog.open(ModifyAssignmentModalComponent, {
       width: '800px',
       // Data to inject into modal
-      data: { assignment: this.assignments[index] }
+      data: this.assignments[index]
     });
 
     // Save changes back to assignment
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.assignments[index] = result;
+        console.log(result);
+      }
+    });
+  }
+
+  // Open modal for creating assignment
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddAssignmentModalComponent, {
+      width: '800px'
+    });
+
+    // Save changes back to assignment
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.createAssignment(result);
       }
     });
   }

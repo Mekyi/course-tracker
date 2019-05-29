@@ -13,16 +13,46 @@ export class DataService extends BaseCommService{
     super(httpClient);
   }
 
+  // Return all courses
   getCourses(): CourseItem[] {
     return courseItems;
   }
 
+  // Return course by id
   getCourse(index: number): CourseItem {
     return courseItems.filter((item) => item.course_id === index).pop();
   }
 
+  // Return all course's assignments
   getCourseAssignment(courseId: number): AssignmentItem[] {
     return assignmentsItems.filter((item) => item.course_id_FK === courseId);
+  }
+
+  // Return specific assignment with course and assignment id
+  getAssignment(courseId: number, assignmentId: number): AssignmentItem {
+    return assignmentsItems.filter((item) => item.course_id_FK === courseId && item.assignment_id === assignmentId).pop();
+  }
+
+  // Return generated id for new assignment
+  genAssignmentId(courseId: number): number {
+    const assignments = this.getCourseAssignment(courseId);
+    return assignments.length + 1;
+  }
+
+  // Return generated id for new assignment
+  genCourseId(): number {
+    const courses = this.getCourses();
+    return courses.length + 1;
+  }
+
+  // Add assignment
+  addAssignment(assignment: AssignmentItem): void {
+    assignmentsItems.push(assignment);
+  }
+
+  // Add course
+  addCourse(course: CourseItem): void {
+    courseItems.push(course);
   }
 }
 

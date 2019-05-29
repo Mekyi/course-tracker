@@ -10,11 +10,15 @@ import { FormControl } from '@angular/forms';
 })
 export class ModifyAssignmentModalComponent implements OnInit {
 
+  assignment: AssignmentItem;
+  states = [{value: 'armed'}, {value: 'disarmed'}];
+
   constructor(public dialogRef: MatDialogRef<ModifyAssignmentModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AssignmentItem) { }
 
   ngOnInit() {
-    console.log(this.data);
+    this.assignment = this.data;
+    console.log(this.assignment);
   }
 
   onNoClick(): void {

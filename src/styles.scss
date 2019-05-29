@@ -21,3 +21,24 @@ mat-form-field {
 mat-panel-title {
   font-weight: bolder;
 }
+
+.mat-card {
+  max-width: 400px;
+  flex: auto;
+  border: 2px solid lightgray;
+}
+
+.mat-expansion-panel {
+  margin: 5px;
+  border: 2px solid lightgray;
+}
+
+body {
+  margin: 0px;
+}
+
+.input-form {
+  min-width: 150px;
+  max-width: 350px;
+  width: 100%;
+}

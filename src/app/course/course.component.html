@@ -1,34 +1,44 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Home" routerLink="/">home</mat-icon>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Home" 
+      routerLink="/">home</mat-icon>
     <span class="center">{{ courseItem.name }}</span>
     <span class="spacer"></span>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Add course">add</mat-icon>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Add course" 
+      (click)="openAddDialog()">add</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>
 
+<!-- Create expansion panel for each course assignment -->
 <div class="assignment-container" *ngFor="let assignment of assignments; let i=index">
   <mat-accordion>
     <mat-expansion-panel class="assignment-item">
         <mat-expansion-panel-header>
+          <!-- Assignment name-->
           <mat-panel-title>
             {{ assignment.name }}
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-form-field>
-          <input matInput [readonly]="true" placeholder="Description" value="{{ assignment.desc }}">
+        <!-- Expansion panel content -->
+        <!-- Content is presented in form fields, which are disabled.
+             Modification only allowed in modify modal -->
+        <mat-form-field class="input-form">
+          <input matInput [disabled]="true" 
+            placeholder="Description" value="{{ assignment.desc }}">
         </mat-form-field>
         <br>
         
         <mat-form-field>
-          <input matInput [readonly]="true" [matDatepicker]="picker3" placeholder="Create date" [value]=convertDate(assignment.created_date)>
+          <input matInput [disabled]="true" [matDatepicker]="picker3" 
+            placeholder="Create date" [value]=convertDate(assignment.created_date)>
           <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
           <!-- <mat-datepicker #picker3></mat-datepicker> -->
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [readonly]="true" [matDatepicker]="picker3" placeholder="Due date" [value]=convertDate(assignment.due_date)>
+          <input matInput [disabled]="true" [matDatepicker]="picker3" 
+            placeholder="Due date" [value]=convertDate(assignment.due_date)>
           <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
           <!-- <mat-datepicker #picker3></mat-datepicker> -->
         </mat-form-field>
@@ -39,7 +49,11 @@
             <option value="selected">{{ assignment.state }}</option>
           </select>
         </mat-form-field>
-        <button mat-button color="primary" (click)="openModifyDialog(i)">Modify</button>
+        <br>
+
+        <!-- Open modify modal component-->
+        <button mat-raised-button color="primary" 
+          (click)="openModifyDialog(i)">Modify</button>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

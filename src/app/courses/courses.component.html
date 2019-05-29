@@ -1,14 +1,18 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Home" routerLink="/">home</mat-icon>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Home" 
+      routerLink="/">home</mat-icon>
     <span class="center">Course Tracker</span>
     <span class="spacer"></span>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Add course">add</mat-icon>
+    <mat-icon class="icon" aria-hidden="false" aria-label="Add course"
+      (click)="openAddDialog()">add</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="course-container" *ngFor="let course of courses">
-  <mat-card class="course-item">
+
+<div class="course-container" fxLayout fxLayout.sm="column" fxLayout.xs="column" 
+    fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.sm="0" fxLayoutGap.xs="0px">
+  <mat-card class="course-item" *ngFor="let course of courses">
     <mat-card-header>
       <mat-card-title>{{ course.name }}</mat-card-title>
       <mat-card-subtitle>{{ course.start_date }} - {{ course.end_date }}</mat-card-subtitle>

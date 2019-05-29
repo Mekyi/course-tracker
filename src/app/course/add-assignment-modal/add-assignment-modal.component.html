@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>New assignment</h2>
+
+<form action="">
+  <mat-dialog-content>
+    <!-- Form field for assignment name -->
+    <mat-form-field class="input-form">
+      <input matInput [(ngModel)]="newAssignment.name" name="name" 
+        placeholder="Assignment name" required>
+    </mat-form-field>
+    <!-- Form field for assignment description -->
+    <mat-form-field class="input-form">
+      <input matInput [(ngModel)]="newAssignment.desc" name="desc" 
+        placeholder="Description">
+    </mat-form-field>
+    <br>
+  
+    <!-- Form field for assignment creation date. Edit disabled -->
+    <mat-form-field>
+      <input matInput [disabled]="true" 
+        [matDatepicker]="picker1" placeholder="Create date" [value]="date.value">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  
+    <!-- Form field for assignment due date -->
+    <mat-form-field>
+      <input matInput [(ngModel)]="newAssignment.due_date" name="due_date" 
+        [matDatepicker]="picker2" placeholder="Due date" [value]="">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  
+    <!-- Form field for assignment state -->
+    <mat-form-field>
+      <mat-label>State</mat-label>
+      <mat-select [(ngModel)]="newAssignment.state" name="state">
+        <mat-option *ngFor="let state of states" [value]="state.value">
+          {{ state.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  
+  <!-- Form actions -->
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <!-- Return new data when create button is pressed -->
+    <button mat-button mat-raised-button color="primary" 
+      [mat-dialog-close]="newAssignment" cdkFocusInitial>Create</button>
+  </mat-dialog-actions>
+</form>

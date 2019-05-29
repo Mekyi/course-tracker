@@ -9,6 +9,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { CourseComponent } from './course/course.component';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // For mockup server
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -17,7 +19,10 @@ import { InMemoryDataService } from './in-memory-data.service';
 // All material imports are in same file
 import { MaterialModule } from './material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { ModifyAssignmentModalComponent } from './course/modify-assignment-modal/modify-assignment-modal.component';
+import { AddAssignmentModalComponent } from './course/add-assignment-modal/add-assignment-modal.component';
+import { AddCourseModalComponent } from './courses/add-course-modal/add-course-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +30,17 @@ import { ModifyAssignmentModalComponent } from './course/modify-assignment-modal
     CoursesComponent,
     PageNotFoundComponent,
     CourseComponent,
-    ModifyAssignmentModalComponent
+    ModifyAssignmentModalComponent,
+    AddAssignmentModalComponent,
+    AddCourseModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FlexLayoutModule,
     MaterialModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule,
 
     HttpClientInMemoryWebApiModule.forRoot(
@@ -40,7 +49,10 @@ import { ModifyAssignmentModalComponent } from './course/modify-assignment-modal
   ],
   // Modals to load dynamically
   entryComponents: [
-    ModifyAssignmentModalComponent
+    ModifyAssignmentModalComponent,
+    AddAssignmentModalComponent,
+    //ModifyCourseModalComponent,
+    AddCourseModalComponent
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

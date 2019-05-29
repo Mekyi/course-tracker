@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseCommService {
 
-  protected API_URL = 'http://localhost:3000/v1/api';
+  protected API_URL = 'http://niisku.lamk.fi/~Mikael17001/serverside19/CourseTrackerRest';
 
   constructor(protected httpClient: HttpClient) { }
 
-  protected async postRequest(uri: any, body: any): Promise<any> {
-    return await this.httpClient.post(`${this.API_URL}/${uri}`, body).toPromise();
+  protected postRequest(uri: any, body: any): Observable<any> {
+    return this.httpClient.post(`${this.API_URL}/${uri}`, body);
   }
 
-  protected async putRequest(uri: any, body: any): Promise<any> {
-    return await this.httpClient.put(`${this.API_URL}/${uri}`, body).toPromise();
+  protected putRequest(uri: any, body: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.httpClient.put(`${this.API_URL}/${uri}`, body);
   }
 
-  protected async deleteRequest(uri: any): Promise<any> {
-    return await this.httpClient.delete(`${this.API_URL}/${uri}`).toPromise();
+  protected deleteRequest(uri: any): Observable<any> {
+    return this.httpClient.delete(`${this.API_URL}/${uri}`);
   }
 
-  protected async getRequest(uri: any): Promise<any> {
-    return await this.httpClient.get(`${this.API_URL}/${uri}`).toPromise();
+  protected getRequest(uri: any): Observable<any> {
+    return this.httpClient.get(`${this.API_URL}/${uri}`);
   }
 }

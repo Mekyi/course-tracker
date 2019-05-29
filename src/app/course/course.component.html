@@ -25,22 +25,22 @@
              Modification only allowed in modify modal -->
         <mat-form-field class="input-form">
           <input matInput [disabled]="true" 
-            placeholder="Description" value="{{ assignment.desc }}">
+            placeholder="Description" value="{{ assignment.description }}">
         </mat-form-field>
         <br>
         
         <mat-form-field>
-          <input matInput [disabled]="true" [matDatepicker]="picker3" 
+          <input matInput [disabled]="true" [matDatepicker]="picker1" 
             placeholder="Create date" [value]=convertDate(assignment.created_date)>
-          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-          <!-- <mat-datepicker #picker3></mat-datepicker> -->
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput [disabled]="true" [matDatepicker]="picker3" 
+          <input matInput [disabled]="true" [matDatepicker]="picker2" 
             placeholder="Due date" [value]=convertDate(assignment.due_date)>
-          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-          <!-- <mat-datepicker #picker3></mat-datepicker> -->
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>

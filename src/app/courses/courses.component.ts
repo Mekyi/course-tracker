@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseCommService } from '../services/base-comm.service'
 import { DataService } from '../services/data.service';
-import { CourseItem, AssignmentItem } from '../templates/template';
+import { CourseItem } from '../templates/template';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { FormControl } from '@angular/forms';
 import { ModifyCourseModalComponent } from './modify-course-modal/modify-course-modal.component';
 import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
 
@@ -20,8 +20,13 @@ export class CoursesComponent implements OnInit {
           public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.courses = this.dataService.getCourses();
-    console.log(this.courses);
+    this.getCourses();
+  }
+
+  getCourses() {
+    this.dataService.getCourses().subscribe(response => {
+      this.courses = response;
+    });
   }
 
   onSelect(id: number) {
@@ -40,7 +45,6 @@ export class CoursesComponent implements OnInit {
   createCourse(data) {
     const newCourse: CourseItem = {
       // Fill course properties
-      course_id: this.dataService.genCourseId(),
       name: data.name,
       // Convert date format to ISO string and remove time
       start_date: data.start_date.toISOString().split('T')[0],
@@ -48,24 +52,33 @@ export class CoursesComponent implements OnInit {
     };
 
     // Send course to data service
-    this.dataService.addCourse(newCourse);
+    this.dataService.addCourse({course: newCourse}).subscribe(result =>
+      console.log(result)
+    );
 
-    // Update courses from data service
-    this.courses = this.dataService.getCourses();
+    // Refresh updated courses from back-end
+    setTimeout(() => {
+      this.getCourses();
+    }, 1000);
   }
 
   // Update existing course
-  updateCourse(data: CourseItem): void {
+  updateCourse(data: CourseItem, index: number): void {
+    this.courses[index].name = data.name;
+
     // Ensure that dates are in right format
-    data.start_date = new Date(data.start_date).toISOString().split('T')[0];
-    data.end_date = new Date(data.end_date).toISOString().split('T')[0];
+    this.courses[index].start_date = new Date(data.start_date).toISOString().split('T')[0];
+    this.courses[index].end_date = new Date(data.end_date).toISOString().split('T')[0];
 
     // Send course to data service
-    this.dataService.updateCourse(data);
-    console.log(data);
+    this.dataService.updateCourse({course: this.courses[index]}).subscribe(result =>
+      console.log(result)
+    );
 
     // Update courses from data service
-    this.courses = this.dataService.getCourses();
+    setTimeout(() => {
+      this.getCourses();
+    }, 1000);
   }
 
   // Open modal for creating course
@@ -85,6 +98,7 @@ export class CoursesComponent implements OnInit {
 
   // Open modal for modifying course
   openModifyDialog(index): void {
+    console.log(this.courses);
     const dialogRef = this.dialog.open(ModifyCourseModalComponent, {
       width: '800px',
       // Data to inject into modal
@@ -95,7 +109,7 @@ export class CoursesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        this.updateCourse(result);
+        this.updateCourse(result, index);
       }
     });
   }

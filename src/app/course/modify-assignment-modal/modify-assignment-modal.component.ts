@@ -12,9 +12,8 @@ export class ModifyAssignmentModalComponent implements OnInit {
 
   // Create empty assignment object to prevent data binding
   modifiedAssignment: AssignmentItem = {
-    assignment_id: 0,
     name: '',
-    desc: '',
+    description: '',
     created_date: '',
     due_date: '',
     state: '',
@@ -26,9 +25,8 @@ export class ModifyAssignmentModalComponent implements OnInit {
 
   ngOnInit() {
     // Assign properties to modifiable object
-    this.modifiedAssignment.assignment_id = this.data.assignment_id;
     this.modifiedAssignment.name = this.data.name;
-    this.modifiedAssignment.desc = this.data.desc;
+    this.modifiedAssignment.description = this.data.description;
     this.modifiedAssignment.created_date = this.data.created_date;
     this.modifiedAssignment.due_date = this.data.due_date;
     this.modifiedAssignment.state = this.data.state;

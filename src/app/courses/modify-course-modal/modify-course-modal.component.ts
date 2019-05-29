@@ -12,7 +12,6 @@ export class ModifyCourseModalComponent implements OnInit {
 
   // Create empty course object to prevent data binding
   modifiedCourse: CourseItem = {
-    course_id: 0,
     name: '',
     start_date: '',
     end_date: ''
@@ -23,7 +22,6 @@ export class ModifyCourseModalComponent implements OnInit {
 
   ngOnInit() {
     // Assign properties to modifiable object
-    this.modifiedCourse.course_id = this.data.course_id;
     this.modifiedCourse.name = this.data.name;
     this.modifiedCourse.start_date = this.data.start_date;
     this.modifiedCourse.end_date = this.data.end_date;

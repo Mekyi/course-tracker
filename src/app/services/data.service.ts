@@ -2,119 +2,63 @@ import { Injectable } from '@angular/core';
 import { BaseCommService } from './base-comm.service';
 import { HttpClient } from '@angular/common/http';
 
+import { Observable, of } from 'rxjs';
+
+import { catchError, map, tap } from 'rxjs/operators';
+
 import { CourseItem, AssignmentItem } from '../templates/template';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataService extends BaseCommService{
+export class DataService extends BaseCommService {
 
-  constructor(protected httpClient: HttpClient) { 
+  constructor(protected httpClient: HttpClient) {
     super(httpClient);
   }
 
-  // Return all courses
-  getCourses(): CourseItem[] {
-    return courseItems;
+  // GET all courses
+  getCourses(): Observable<CourseItem[]> {
+    return this.getRequest('courses').pipe(
+      map(response => response)
+    );
   }
 
-  // Return course by id
-  getCourse(index: number): CourseItem {
-    return courseItems.filter((item) => item.course_id === index).pop();
+  // GET course by id
+  getCourse(id: number): Observable<CourseItem> {
+    return this.getRequest(`courses/${id}`).pipe(
+      map(response => response)
+    );
   }
 
-  // Return all course's assignments
-  getCourseAssignment(courseId: number): AssignmentItem[] {
-    return assignmentsItems.filter((item) => item.course_id_FK === courseId);
+  // GET all assignments by course id
+  getCourseAssignments(courseId: number): Observable<AssignmentItem[]> {
+    return this.getRequest(`assignments/${courseId}`).pipe(
+      map(response => response)
+    );
   }
 
-  // Return specific assignment with course and assignment id
-  getAssignment(courseId: number, assignmentId: number): AssignmentItem {
-    return assignmentsItems.filter((item) => item.course_id_FK === courseId && item.assignment_id === assignmentId).pop();
+  // POST (create new) course
+  addCourse(course: Object): Observable<any> {
+    console.log(JSON.stringify(course));
+    return this.postRequest('courses', JSON.stringify(course));
   }
 
-  // Return generated id for new assignment
-  genAssignmentId(courseId: number): number {
-    const assignments = this.getCourseAssignment(courseId);
-    return assignments.length + 1;
+  // POST (create new) assignment
+  addAssignment(assignment: Object): Observable<any> {
+    console.log(JSON.stringify(assignment));
+    return this.postRequest('assignments', JSON.stringify(assignment));
   }
 
-  // Return generated id for new assignment
-  genCourseId(): number {
-    const courses = this.getCourses();
-    return courses.length + 1;
+  // PUT (update) course
+  updateCourse(course: Object): Observable<any> {
+    console.log(JSON.stringify(course));
+    return this.putRequest('courses', JSON.stringify(course));
   }
 
-  // Add assignment
-  addAssignment(assignment: AssignmentItem): void {
-    assignmentsItems.push(assignment);
-  }
-
-  // Update assignment
-  updateAssignment(assignment: AssignmentItem) {
-    assignmentsItems[assignment.assignment_id] = assignment;
-    console.log(assignment);
-    console.log(assignmentsItems);
-  }
-
-  // Add course
-  addCourse(course: CourseItem) {
-    courseItems.push(course);
-  }
-
-  // Update course
-  updateCourse(course: CourseItem) {
-    courseItems[course.course_id] = course;
+  // PUT (update) assignment
+  updateAssignment(assignment: Object): Observable<any> {
+    console.log(JSON.stringify(assignment));
+    return this.putRequest('assignments', JSON.stringify(assignment));
   }
 }
-
-const courseItems: CourseItem[] = [
-  {
-    course_id: 0,
-    name: 'Browser As A Platform',
-    start_date: '2019-01-01',
-    end_date: '2019-03-18'
-  },
-  {
-    course_id: 1,
-    name: 'Server Side Programming',
-    start_date: '2019-01-01',
-    end_date: '2019-03-18'
-  },
-  {
-    course_id: 2,
-    name: 'Web Frameworks',
-    start_date: '2019-03-20',
-    end_date: '2019-04-30'
-  }
-];
-
-const assignmentsItems: AssignmentItem[] = [
-  {
-    assignment_id: 0,
-    name: 'Week 19 essay',
-    desc: 'Write essay about jQuery',
-    state: 'armed',
-    created_date: '2019-04-01',
-    due_date: '2019-04-15',
-    course_id_FK: 0
-  },
-  {
-    assignment_id: 1,
-    name: 'ES6 game',
-    desc: 'ES6 game development',
-    state: 'armed',
-    created_date: '2019-04-01',
-    due_date: '2019-04-17',
-    course_id_FK: 0
-  },
-  {
-    assignment_id: 2,
-    name: 'Week 21 essay',
-    desc: 'Write essay about ES6',
-    state: 'armed',
-    created_date: '2019-04-01',
-    due_date: '2019-04-29',
-    course_id_FK: 0
-  },
-];

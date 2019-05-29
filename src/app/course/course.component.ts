@@ -25,22 +25,22 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     // Get course and assignment items via data service
-    this.courseItem = this.dataService.getCourse(this.courseId);
-    this.assignments = this.dataService.getCourseAssignment(this.courseId);
+    this.dataService.getCourse(this.courseId).subscribe(response =>
+      this.courseItem = response[0]);
+    this.getAssignments(this.courseId);
   }
 
-  // Format date for calendar component
-  convertDate(date) {
-    return(new FormControl(new Date(date)).value);
+  getAssignments(courseId: number): void {
+    this.dataService.getCourseAssignments(courseId).subscribe(response =>
+      this.assignments = response);
   }
 
-  createAssignment(data) {
+  createAssignment(data): void {
     // Create assignment from template
     const newAssignment: AssignmentItem = {
       // Fill assignment properties
-      assignment_id: this.dataService.genAssignmentId(this.courseId),
       name: data.name,
-      desc: data.desc,
+      description: data.description,
       state: data.state,
       // Convert date format to ISO string and remove time
       created_date: new Date(this.date).toISOString().split('T')[0],
@@ -49,25 +49,38 @@ export class CourseComponent implements OnInit {
     };
 
     // Send assignment to data service
-    this.dataService.addAssignment(newAssignment);
+    this.dataService.addAssignment({ assignment: newAssignment }).subscribe(result =>
+      console.log(result)
+    );
 
-     // Update assignments from data service
-    this.assignments = this.dataService.getCourseAssignment(this.courseId);
+    // Refresh updated assignments from back-end
+    setTimeout(() => {
+       this.getAssignments(this.courseId);
+    }, 1000);
   }
 
   // Update existing assignment
-  updateAssignment(data: AssignmentItem): void {
+  updateAssignment(data: AssignmentItem, index: number): void {
+    this.assignments[index].description = data.description;
     // Ensure that date is in right format
-    data.due_date = new Date(data.due_date).toISOString().split('T')[0];
+    this.assignments[index].due_date = new Date(data.due_date).toISOString().split('T')[0];
+    this.assignments[index].state = data.state;
 
     // Send asignment to data service
-    this.dataService.updateAssignment(data);
-    console.log(data);
+    this.dataService.updateAssignment({ assignment: this.assignments[index] }).subscribe(result =>
+      console.log(result)
+    );
 
-    // Update assignments from data service
-    this.assignments = this.dataService.getCourseAssignment(this.courseId);
+    // Refresh assignments from back-end
+    setTimeout(() => {
+      this.getAssignments(this.courseId);
+   }, 1000);
   }
 
+  // Format date for calendar component
+  convertDate(date) {
+    return(new FormControl(new Date(date)).value);
+  }
 
   // Open modal for creating assignment
   openAddDialog(): void {
@@ -94,7 +107,7 @@ export class CourseComponent implements OnInit {
     // Save changes back to assignment
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.updateAssignment(result);
+        this.updateAssignment(result, index);
       }
     });
   }

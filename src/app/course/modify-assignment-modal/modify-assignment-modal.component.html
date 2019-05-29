@@ -1,25 +1,24 @@
-<h2 mat-dialog-title>{{ assignment.name }}</h2>
+<h2 mat-dialog-title>{{ modifiedAssignment.name }}</h2>
 
 <mat-dialog-content>
   <!-- Form field for assignment description -->
   <mat-form-field class="input-form">
-    <input matInput [(ngModel)]="assignment.desc" 
-      placeholder="Description" value="{{ assignment.desc }}">
+    <input matInput [(ngModel)]="modifiedAssignment.desc" placeholder="Description">
   </mat-form-field>
   <br>
 
   <!-- Form field for assignment creation date. Edit disabled -->
   <mat-form-field>
-    <input matInput [disabled]="true" [matDatepicker]="picker1" 
-      placeholder="Create date" [value]=convertDate(assignment.created_date)>
+    <input matInput [(ngModel)]="modifiedAssignment.created_date" 
+      [disabled]="true" [matDatepicker]="picker1" placeholder="Create date">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
 
   <!-- Form field for assignment due date -->
   <mat-form-field>
-    <input matInput [matDatepicker]="picker2" 
-      placeholder="Due date" [value]=convertDate(assignment.due_date)>
+    <input matInput [(ngModel)]="modifiedAssignment.due_date" 
+      [matDatepicker]="picker2" placeholder="Due date">
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
@@ -27,16 +26,15 @@
   <!-- Form field for assignment state -->
   <mat-form-field>
     <mat-label>State</mat-label>
-    <mat-select [(value)]="assignment.state">
-      <mat-option *ngFor="let state of states" [value]="assignment.state">
-        {{ state.value }}
-      </mat-option>
+    <mat-select [(ngModel)]="modifiedAssignment.state">
+      <mat-option value="armed">armed</mat-option>
+      <mat-option value="disarmed">disarmed</mat-option>
     </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-stroked-button (click)="onNoClick()">Close</button>
-  <!-- <button mat-button mat-raised-button color="primary" 
-      [mat-dialog-close]="assignment" cdkFocusInitial>Save</button> -->
+  <button mat-button mat-raised-button color="primary" 
+      [mat-dialog-close]="modifiedAssignment" cdkFocusInitial>Save</button>
 </mat-dialog-actions>

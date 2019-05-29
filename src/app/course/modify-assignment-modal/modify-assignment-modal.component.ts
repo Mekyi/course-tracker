@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CourseItem, AssignmentItem } from '../../templates/template';
+import { AssignmentItem } from '../../templates/template';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -10,15 +10,29 @@ import { FormControl } from '@angular/forms';
 })
 export class ModifyAssignmentModalComponent implements OnInit {
 
-  assignment: AssignmentItem;
-  states = [{value: 'armed'}, {value: 'disarmed'}];
+  // Create empty assignment object to prevent data binding
+  modifiedAssignment: AssignmentItem = {
+    assignment_id: 0,
+    name: '',
+    desc: '',
+    created_date: '',
+    due_date: '',
+    state: '',
+    course_id_FK: 0
+  };
 
   constructor(public dialogRef: MatDialogRef<ModifyAssignmentModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AssignmentItem) { }
 
   ngOnInit() {
-    this.assignment = this.data;
-    console.log(this.assignment);
+    // Assign properties to modifiable object
+    this.modifiedAssignment.assignment_id = this.data.assignment_id;
+    this.modifiedAssignment.name = this.data.name;
+    this.modifiedAssignment.desc = this.data.desc;
+    this.modifiedAssignment.created_date = this.data.created_date;
+    this.modifiedAssignment.due_date = this.data.due_date;
+    this.modifiedAssignment.state = this.data.state;
+    this.modifiedAssignment.course_id_FK = this.data.course_id_FK;
   }
 
   onNoClick(): void {

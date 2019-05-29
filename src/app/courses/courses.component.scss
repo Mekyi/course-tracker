@@ -3,6 +3,13 @@
   margin: 20px;
 }
 
+.course-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
 .mat-card-header {
   padding-top: 8px;
 }
@@ -15,4 +22,22 @@
   width: 100%;
   padding: 0px;
   margin: 0px;
+}
+
+.mat-card {
+  max-width: 350px;
+  min-width: 300px;
+  flex: auto;
+  border: 2px solid lightgray;
+}
+
+.modify {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 36px;
 }

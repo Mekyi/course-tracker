@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModifyAssignmentModalComponent } from './course/modify-assignment-modal/modify-assignment-modal.component';
 import { AddAssignmentModalComponent } from './course/add-assignment-modal/add-assignment-modal.component';
 import { AddCourseModalComponent } from './courses/add-course-modal/add-course-modal.component';
+import { ModifyCourseModalComponent } from './courses/modify-course-modal/modify-course-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AddCourseModalComponent } from './courses/add-course-modal/add-course-m
     CourseComponent,
     ModifyAssignmentModalComponent,
     AddAssignmentModalComponent,
-    AddCourseModalComponent
+    AddCourseModalComponent,
+    ModifyCourseModalComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,7 @@ import { AddCourseModalComponent } from './courses/add-course-modal/add-course-m
   entryComponents: [
     ModifyAssignmentModalComponent,
     AddAssignmentModalComponent,
-    //ModifyCourseModalComponent,
+    ModifyCourseModalComponent,
     AddCourseModalComponent
   ],
   providers: [DataService],

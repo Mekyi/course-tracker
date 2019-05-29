@@ -50,9 +50,21 @@ export class DataService extends BaseCommService{
     assignmentsItems.push(assignment);
   }
 
+  // Update assignment
+  updateAssignment(assignment: AssignmentItem) {
+    assignmentsItems[assignment.assignment_id] = assignment;
+    console.log(assignment);
+    console.log(assignmentsItems);
+  }
+
   // Add course
-  addCourse(course: CourseItem): void {
+  addCourse(course: CourseItem) {
     courseItems.push(course);
+  }
+
+  // Update course
+  updateCourse(course: CourseItem) {
+    courseItems[course.course_id] = course;
   }
 }
 

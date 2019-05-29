@@ -50,15 +50,41 @@ export class CourseComponent implements OnInit {
 
     // Send assignment to data service
     this.dataService.addAssignment(newAssignment);
-    console.log(newAssignment);
 
-    // Get assignments from data service
+     // Update assignments from data service
     this.assignments = this.dataService.getCourseAssignment(this.courseId);
+  }
+
+  // Update existing assignment
+  updateAssignment(data: AssignmentItem): void {
+    // Ensure that date is in right format
+    data.due_date = new Date(data.due_date).toISOString().split('T')[0];
+
+    // Send asignment to data service
+    this.dataService.updateAssignment(data);
+    console.log(data);
+
+    // Update assignments from data service
+    this.assignments = this.dataService.getCourseAssignment(this.courseId);
+  }
+
+
+  // Open modal for creating assignment
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddAssignmentModalComponent, {
+      width: '800px'
+    });
+
+    // Create new assignment from result
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.createAssignment(result);
+      }
+    });
   }
 
   // Open modal for modifying assignment
   openModifyDialog(index): void {
-    console.log(index);
     const dialogRef = this.dialog.open(ModifyAssignmentModalComponent, {
       width: '800px',
       // Data to inject into modal
@@ -68,22 +94,7 @@ export class CourseComponent implements OnInit {
     // Save changes back to assignment
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
-      }
-    });
-  }
-
-  // Open modal for creating assignment
-  openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddAssignmentModalComponent, {
-      width: '800px'
-    });
-
-    // Save changes back to assignment
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
-        this.createAssignment(result);
+        this.updateAssignment(result);
       }
     });
   }

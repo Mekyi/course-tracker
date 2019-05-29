@@ -1,5 +1,9 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+body {
+  margin: 0px;
+}
+
 .icon {
   padding: 0 14px;
   cursor: pointer;
@@ -22,19 +26,9 @@ mat-panel-title {
   font-weight: bolder;
 }
 
-.mat-card {
-  max-width: 400px;
-  flex: auto;
-  border: 2px solid lightgray;
-}
-
 .mat-expansion-panel {
   margin: 5px;
   border: 2px solid lightgray;
-}
-
-body {
-  margin: 0px;
 }
 
 .input-form {
@@ -42,3 +36,4 @@ body {
   max-width: 350px;
   width: 100%;
 }
+

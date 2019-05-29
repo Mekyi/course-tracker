@@ -8,8 +8,6 @@ import { MatDialogRef } from '@angular/material';
 })
 export class AddCourseModalComponent implements OnInit {
 
-  newCourse: Object = {};
-
   constructor(public dialogRef: MatDialogRef<AddCourseModalComponent>) { }
 
   ngOnInit() {

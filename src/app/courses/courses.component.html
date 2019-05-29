@@ -10,15 +10,20 @@
 </mat-toolbar>
 
 
-<div class="course-container" fxLayout fxLayout.sm="column" fxLayout.xs="column" 
-    fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.sm="0" fxLayoutGap.xs="0px">
-  <mat-card class="course-item" *ngFor="let course of courses">
+<div class="course-container">
+  <mat-card class="course-item" *ngFor="let course of courses; let i=index">
     <mat-card-header>
-      <mat-card-title>{{ course.name }}</mat-card-title>
-      <mat-card-subtitle>{{ course.start_date }} - {{ course.end_date }}</mat-card-subtitle>
+      <mat-card-title>
+        {{ course.name }}
+        <mat-icon class="modify" (click)="openModifyDialog(i)">settings</mat-icon>
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ course.start_date }} - {{ course.end_date }}
+      </mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-      <button class="select-button" mat-flat-button color="primary" (click)="onSelect(course.course_id)">Select</button>
+      <button class="select-button" mat-flat-button color="primary" 
+        (click)="onSelect(course.course_id)">Select</button>
     </mat-card-actions>
   </mat-card>
 </div>

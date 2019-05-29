@@ -4,6 +4,7 @@ import { CourseItem, AssignmentItem } from '../templates/template';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
+import { ModifyCourseModalComponent } from './modify-course-modal/modify-course-modal.component';
 import { AddCourseModalComponent } from './add-course-modal/add-course-modal.component';
 
 @Component({
@@ -28,8 +29,8 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(['/course/' + id]);
   }
 
+  // Create new course
   createCourse(data) {
-    // Create course from template
     const newCourse: CourseItem = {
       // Fill course properties
       course_id: this.dataService.genCourseId(),
@@ -42,21 +43,52 @@ export class CoursesComponent implements OnInit {
     // Send course to data service
     this.dataService.addCourse(newCourse);
 
-    // Get courses from data service
+    // Update courses from data service
     this.courses = this.dataService.getCourses();
   }
-  
-  // Open modal for creating assignment
+
+  // Update existing course
+  updateCourse(data: CourseItem): void {
+    // Ensure that dates are in right format
+    data.start_date = new Date(data.start_date).toISOString().split('T')[0];
+    data.end_date = new Date(data.end_date).toISOString().split('T')[0];
+
+    // Send course to data service
+    this.dataService.updateCourse(data);
+    console.log(data);
+
+    // Update courses from data service
+    this.courses = this.dataService.getCourses();
+  }
+
+  // Open modal for creating course
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddCourseModalComponent, {
       width: '800px'
+    });
+
+    // Create new vourse from result
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.createCourse(result);
+      }
+    });
+  }
+
+  // Open modal for modifying course
+  openModifyDialog(index): void {
+    const dialogRef = this.dialog.open(ModifyCourseModalComponent, {
+      width: '800px',
+      // Data to inject into modal
+      data: this.courses[index]
     });
 
     // Save changes back to assignment
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        this.createCourse(result);
+        this.updateCourse(result);
       }
     });
   }

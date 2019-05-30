@@ -77,6 +77,16 @@ export class CourseComponent implements OnInit {
    }, 1000);
   }
 
+  // Delete assugnment
+  deleteAssignment(index) {
+    // Send delete request to back-end
+    this.dataService.deleteAssignment(this.assignments[index]['assignment_id']).subscribe(result =>
+      console.log(result)
+    );
+    // Delete locally
+    this.assignments.splice(index, 1);
+  }
+
   // Format date for calendar component
   convertDate(date) {
     return(new FormControl(new Date(date)).value);

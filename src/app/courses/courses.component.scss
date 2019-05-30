@@ -26,12 +26,12 @@
 
 .mat-card {
   max-width: 350px;
-  min-width: 300px;
+  min-width: 350px;
   flex: auto;
   border: 2px solid lightgray;
 }
 
-.modify {
+.actions {
   position: absolute;
   right: 0;
   top: 2px;
@@ -40,4 +40,5 @@
   text-align: center;
   cursor: pointer;
   line-height: 36px;
+  color: grey;
 }

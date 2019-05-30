@@ -15,7 +15,10 @@
     <mat-card-header>
       <mat-card-title>
         {{ course.name }}
-        <mat-icon class="modify" (click)="openModifyDialog(i)">settings</mat-icon>
+      <div class="actions">
+        <mat-icon (click)="openModifyDialog(i)">settings</mat-icon>
+        <mat-icon (click)="deleteCourse(i)">delete</mat-icon>
+      </div>
       </mat-card-title>
       <mat-card-subtitle>
         {{ formatDate(course.start_date) }} - {{ formatDate(course.end_date) }}

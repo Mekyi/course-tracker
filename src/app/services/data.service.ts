@@ -61,4 +61,14 @@ export class DataService extends BaseCommService {
     console.log(JSON.stringify(assignment));
     return this.putRequest('assignments', JSON.stringify(assignment));
   }
+
+  // DELETE course and its assignments
+  deleteCourse(id: Object): Observable<any> {
+    return this.deleteRequest(`courses/${id}`);
+  }
+
+  // DELETE assignment
+  deleteAssignment(id: Object): Observable<any> {
+    return this.deleteRequest(`assignments/${id}`);
+  }
 }

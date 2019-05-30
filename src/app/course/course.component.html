@@ -52,8 +52,10 @@
         <br>
 
         <!-- Open modify modal component-->
-        <button mat-raised-button color="primary" 
-          (click)="openModifyDialog(i)">Modify</button>
+        <button mat-raised-button color="primary" (click)="openModifyDialog(i)">Modify</button>
+        <!-- Delete assignment -->
+        <button class="delete-button" mat-flat-button color="warn" 
+                (click)="deleteAssignment(i)">Delete</button>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

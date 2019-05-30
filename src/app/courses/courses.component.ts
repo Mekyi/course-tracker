@@ -75,10 +75,20 @@ export class CoursesComponent implements OnInit {
       console.log(result)
     );
 
-    // Update courses from data service
+    // Refresh updated courses from back-end
     setTimeout(() => {
       this.getCourses();
     }, 1000);
+  }
+
+  // Delete course and its assignments
+  deleteCourse(index) {
+    // Send delete request to back-end
+    this.dataService.deleteAssignment(this.courses[index]['course_id']).subscribe(result =>
+      console.log(result)
+    );
+    // Delete locally
+    this.courses.splice(index, 1);
   }
 
   // Open modal for creating course

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>New course</h2>
 
-<form action="">
+<form #f="ngForm">
   <mat-dialog-content>
     <!-- Form field for course name -->
     <mat-form-field class="input-form">
@@ -12,7 +12,7 @@
     <!-- Form field for course start date -->
     <mat-form-field>
       <input matInput [(ngModel)]="newCourse.start_date" name="start_date" 
-        [matDatepicker]="picker1" placeholder="Start date" [value]="">
+        [matDatepicker]="picker1" placeholder="Start date" [value]="" required>
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
@@ -20,7 +20,7 @@
     <!-- Form field for course end date -->
     <mat-form-field>
       <input matInput [(ngModel)]="newCourse.end_date" name="end_date" 
-        [matDatepicker]="picker2" placeholder="End date" [value]="">
+        [matDatepicker]="picker2" placeholder="End date" [value]="" required>
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
@@ -29,7 +29,8 @@
   <mat-dialog-actions>
     <button mat-raised-button (click)="onNoClick()">Cancel</button>
     <!-- Return new data when create button is pressed -->
-    <button mat-button mat-raised-button color="primary" 
-      [mat-dialog-close]="newCourse" cdkFocusInitial>Create</button>
+    <!-- Disabled if required fields not filled -->
+    <button mat-button mat-raised-button color="primary" type="submit" 
+      [disabled]="!f.valid" [mat-dialog-close]="newCourse" cdkFocusInitial>Create</button>
   </mat-dialog-actions>
 </form>

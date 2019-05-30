@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { CourseItem } from '../../templates/template';
 
 @Component({
   selector: 'app-add-course-modal',
@@ -8,7 +9,11 @@ import { MatDialogRef } from '@angular/material';
 })
 export class AddCourseModalComponent implements OnInit {
 
-  newCourse = {};
+  newCourse: CourseItem = {
+    name: '',
+    start_date: '',
+    end_date: ''
+  };
 
   constructor(public dialogRef: MatDialogRef<AddCourseModalComponent>) { }
 

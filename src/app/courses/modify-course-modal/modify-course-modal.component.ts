@@ -35,4 +35,5 @@ export class ModifyCourseModalComponent implements OnInit {
     return(new FormControl(new Date(date)).value);
   }
 
+
 }
